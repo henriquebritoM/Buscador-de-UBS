@@ -1,5 +1,22 @@
+/*
+ *  Estrutura de dados feita para localizar UBSs 
+ *  com base na região, especialidade médica
+ *  e tempo de espera (fila)
+ * 
+ *  Esse projeto é apenas um protótipo, feito
+ *  com intenção educativa como teste de conceito
+*/
+
+//
+//-------------------------- Trazendo o módulo de testes para o escopo --------------------------//
+//
 mod tests;
 
+//-------------------------- Enum Especidalidades --------------------------//
+//
+//  Esse enum agrupa os vários tipos de atendimento médicos,
+//  para futuras filtragens
+//  Novas variantes podem ser adicionadas conforme necessário 
 #[derive(Debug, PartialEq, Clone, Copy)]
 enum Especialidades {
     Cardiologista,
@@ -7,17 +24,39 @@ enum Especialidades {
     Endocrionologista
 }
 
+//-------------------------- Struct Atendimento --------------------------//
+//  
+//  Atendimento agrupa uma especialidade médica (enum Especialidades)
+//  junto a sua respectiva fila de espera (u16)
 #[derive(Debug, PartialEq, Clone, Copy)]
 struct Atendimento {
     especialidade: Especialidades,
     espera: u16
 }
 
+
+//-------------------------- Struct Ubs --------------------------//
+//
+//  Agrupa um endereço (String) e um vetor de vários 
+//  Atendimentos
 #[derive(Debug, PartialEq, Clone)]
 struct Ubs {
     atendimentos: Vec<Atendimento>,  // lista de atendimentos que a UBS fornece e seus respectivos tempos de espera
     endereco: String
 }
+
+/************************************************************************
+ *                                                                      *
+ *              Declaração dos structs das regiões                      *
+ *                                                                      *
+ ************************************************************************/
+ //
+ // É importante que cada região tenha sua própria struct,
+ // para que possam ser selecionadas individualmentes através
+ // da struct Regioes
+ // Cada struct de região contém um Option de um vetor de Ubs
+ // Todo: remover o option: vetor vazio deve ser usado no lugar
+//
 
 #[derive(Debug, PartialEq, Clone)]
 struct SaoCarlos { ubs_lista: Option<Vec<Ubs>> }
@@ -25,12 +64,25 @@ struct SaoCarlos { ubs_lista: Option<Vec<Ubs>> }
 #[derive(Debug, PartialEq, Clone)]
 struct SaoPaulo { ubs_lista: Option<Vec<Ubs>> }
 
+/*
+ *  Fim da declaração das structs de regiões
+*/
+
+//-------------------------- Enum RegioesEnum --------------------------//
+//
+//  Cada variante desse enum deve linkar a uma struct de regiões
+//  Esse Enum é para ser usado como entrada do usuário
 #[derive(Debug, PartialEq, Clone, Copy)]
 enum RegioesEnum {
     SaoCarlos,  
     SaoPaulo
 }
 
+//-------------------------- Struct Regioes --------------------------//
+//
+//  Struct principal
+//  Agrupa todos os structs de região para fácil match
+//
 #[derive(Debug, PartialEq, Clone)]
 struct Regioes {
     sao_carlos: SaoCarlos, // struct SaoCarlos
