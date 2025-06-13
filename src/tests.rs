@@ -83,20 +83,20 @@ fn test_sao_carlos_struct () {
     };
 
     let sao_carlos = SaoCarlos {
-        ubs_lista: Some(Vec::from([ubs.clone()])),
+        ubs_lista: Vec::from([ubs.clone()]),
     };
 
-    assert_eq!(Some(Vec::from([ubs.clone()])), sao_carlos.ubs_lista);
+    assert_eq!(Vec::from([ubs.clone()]), sao_carlos.ubs_lista);
 }
 
 #[test] 
 fn test_sao_carlos_struct_empty_list () {
 
     let sao_carlos = SaoCarlos {
-        ubs_lista: None,
+        ubs_lista: Vec::new(),
     };
 
-    assert_eq!(None, sao_carlos.ubs_lista);
+    assert_eq!(0 as usize, sao_carlos.ubs_lista.len());
 }
 
 #[test] 
@@ -120,11 +120,11 @@ fn test_regioes_struct () {
     };
 
     let sao_carlos = SaoCarlos {
-        ubs_lista: Some(Vec::from([ubs.clone()])),
+        ubs_lista: Vec::from([ubs.clone()]),
     };
 
     let sao_paulo = SaoPaulo {
-        ubs_lista: None,
+        ubs_lista: Vec::new(),
     };
 
     let regioes = Regioes {
@@ -132,8 +132,8 @@ fn test_regioes_struct () {
         sao_paulo: sao_paulo,
     };
 
-    assert_eq!(None, regioes.sao_paulo.ubs_lista);
-    assert_eq!(Some(Vec::from([ubs.clone()])), regioes.sao_carlos.ubs_lista);
+    assert_eq!(true, regioes.sao_paulo.ubs_lista.is_empty());
+    assert_eq!(Vec::from([ubs.clone()]), regioes.sao_carlos.ubs_lista);
 }
 
 #[test]
@@ -157,11 +157,11 @@ fn test_regioes_struct_get_ubs_lista () {
     };
 
     let sao_carlos = SaoCarlos {
-        ubs_lista: Some(Vec::from([ubs.clone()])),
+        ubs_lista: Vec::from([ubs.clone()]),
     };
 
     let sao_paulo = SaoPaulo {
-        ubs_lista: None,
+        ubs_lista: Vec::new(),
     };
 
     let regioes = Regioes {
@@ -212,8 +212,8 @@ fn test_regioes_struct_encontrar_ubs () {
     };
 
     let regioes = Regioes {
-        sao_carlos: SaoCarlos { ubs_lista: Some(Vec::from([ubs1.clone(), ubs2.clone()])) },
-        sao_paulo: SaoPaulo { ubs_lista: None }
+        sao_carlos: SaoCarlos { ubs_lista: Vec::from([ubs1.clone(), ubs2.clone()]) },
+        sao_paulo: SaoPaulo { ubs_lista: Vec::new() }
     };
 
     assert_eq!(Some(ubs2.clone()), regioes.encontrar_ubs(RegioesEnum::SaoCarlos, Especialidades::Cardiologista));

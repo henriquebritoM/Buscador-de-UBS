@@ -7,6 +7,8 @@
  *  com intenção educativa como teste de conceito
 */
 
+use std::vec;
+
 //
 //-------------------------- Trazendo o módulo de testes para o escopo --------------------------//
 //
@@ -59,10 +61,10 @@ struct Ubs {
 //
 
 #[derive(Debug, PartialEq, Clone)]
-struct SaoCarlos { ubs_lista: Option<Vec<Ubs>> }
+struct SaoCarlos { ubs_lista: Vec<Ubs> }
 
 #[derive(Debug, PartialEq, Clone)]
-struct SaoPaulo { ubs_lista: Option<Vec<Ubs>> }
+struct SaoPaulo { ubs_lista: Vec<Ubs> }
 
 /*
  *  Fim da declaração das structs de regiões
@@ -92,9 +94,18 @@ struct Regioes {
 impl Regioes {
     // Retorna o Vec<Ubs> se há um, pode ser que não haja Ubs na região, nesse caso retorna None
     fn get_ubs_list(&self, regiao: RegioesEnum) -> Option<&Vec<Ubs>> {
+        let vec_ubs: &Vec<Ubs>;
+
         match regiao {
-            RegioesEnum::SaoCarlos => return self.sao_carlos.ubs_lista.as_ref(),
-            RegioesEnum::SaoPaulo => return self.sao_paulo.ubs_lista.as_ref(),
+            RegioesEnum::SaoCarlos => vec_ubs = &self.sao_carlos.ubs_lista,
+            RegioesEnum::SaoPaulo => vec_ubs = &self.sao_paulo.ubs_lista,
+        }
+
+        if !vec_ubs.is_empty() {
+            return Some(vec_ubs);
+        }
+        else {
+            return None;
         }
     }
 
@@ -126,8 +137,8 @@ fn main() {
     let especialidade = Especialidades::Cardiologista;
 
     let regioes = Regioes {
-        sao_carlos: SaoCarlos { ubs_lista: None },
-        sao_paulo: SaoPaulo { ubs_lista: None }
+        sao_carlos: SaoCarlos { ubs_lista: Vec::new() },
+        sao_paulo: SaoPaulo { ubs_lista: Vec::new() }
     };
 
     let ubs_escolhida = regioes.encontrar_ubs(zona, especialidade);  // Ubs ou None
